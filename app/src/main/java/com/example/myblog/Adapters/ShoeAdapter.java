@@ -12,8 +12,8 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+
 import com.example.myblog.Models.Shoe;
-import com.example.myblog.PostDetailActivity;
 import com.example.myblog.R;
 import com.example.myblog.ShoeDetailActivity;
 
@@ -34,7 +34,7 @@ public class ShoeAdapter extends RecyclerView.Adapter<ShoeAdapter.MyViewHolder> 
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
-        View row = LayoutInflater.from(mContext).inflate(R.layout.row_post_item ,parent,false);
+        View row = LayoutInflater.from(mContext).inflate(R.layout.row_shoe_item ,parent,false);
         return new MyViewHolder(row);
     }
 
@@ -42,8 +42,8 @@ public class ShoeAdapter extends RecyclerView.Adapter<ShoeAdapter.MyViewHolder> 
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
 
         holder.tvTitle.setText(mData1.get(position).getTitle());
-        Glide.with(mContext).load(mData1.get(position).getPicture()).into(holder.imgPost);
-        Glide.with(mContext).load(mData1.get(position).getUserPhoto()).into(holder.imgPostProfile);
+        Glide.with(mContext).load(mData1.get(position).getPicture()).into(holder.shoeImg);
+        Glide.with(mContext).load(mData1.get(position).getUserPhoto()).into(holder.shoeProfile);
 
     }
 
@@ -55,15 +55,15 @@ public class ShoeAdapter extends RecyclerView.Adapter<ShoeAdapter.MyViewHolder> 
     public class MyViewHolder extends RecyclerView.ViewHolder {
 
         TextView tvTitle;
-        ImageView imgPost;
-        ImageView imgPostProfile;
+        ImageView shoeImg;
+        ImageView shoeProfile;
 
         public MyViewHolder(View itemView) {
             super(itemView);
 
-            tvTitle = itemView.findViewById(R.id.row_post_title);
-            imgPost = itemView.findViewById(R.id.row_post_img);
-            imgPostProfile = itemView.findViewById(R.id.row_post_profile_img);
+            tvTitle = itemView.findViewById(R.id.row_shoe_title);
+            shoeImg = itemView.findViewById(R.id.row_shoe_img);
+            shoeProfile = itemView.findViewById(R.id.row_shoe_profile_img);
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override

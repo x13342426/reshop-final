@@ -36,7 +36,7 @@ import com.bumptech.glide.Glide;
 import com.example.myblog.Fragments.HomeFragment;
 import com.example.myblog.Fragments.ProfileFragment;
 import com.example.myblog.Fragments.SettingsFragment;
-import com.example.myblog.Models.Post;
+import com.example.myblog.Models.Shoe;
 import com.example.myblog.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -53,7 +53,7 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import androidx.fragment.*;
 
-public class Home extends AppCompatActivity
+public class ShoeSwap extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
 
@@ -61,8 +61,8 @@ public class Home extends AppCompatActivity
     private static final int REQUESCODE = 2 ;
     FirebaseAuth mAuth;
     FirebaseUser currentUser ;
-    Dialog popAddPost ;
-    ImageView popupUserImage,popupPostImage,popupAddBtn;
+    Dialog popAddShoe ;
+    ImageView popupUserImage,popupShoeImage,popupAddBtn;
     TextView popupTitle,popupDescription;
     ProgressBar popupClickProgress;
     private Uri pickedImgUri = null;
@@ -71,7 +71,7 @@ public class Home extends AppCompatActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_home2);
+        setContentView(R.layout.activity_shoe);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -90,7 +90,7 @@ public class Home extends AppCompatActivity
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                popAddPost.show();
+                popAddShoe.show();
             }
         });
 
@@ -118,7 +118,7 @@ public class Home extends AppCompatActivity
     private void setupPopupImageClick() {
 
 
-        popupPostImage.setOnClickListener(new View.OnClickListener() {
+        popupShoeImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 // here when image clicked we need to open the gallery
@@ -139,17 +139,17 @@ public class Home extends AppCompatActivity
     private void checkAndRequestForPermission() {
 
 
-        if (ContextCompat.checkSelfPermission(Home.this, Manifest.permission.READ_EXTERNAL_STORAGE)
+        if (ContextCompat.checkSelfPermission(ShoeSwap.this, Manifest.permission.READ_EXTERNAL_STORAGE)
                 != PackageManager.PERMISSION_GRANTED) {
-            if (ActivityCompat.shouldShowRequestPermissionRationale(Home.this, Manifest.permission.READ_EXTERNAL_STORAGE)) {
+            if (ActivityCompat.shouldShowRequestPermissionRationale(ShoeSwap.this, Manifest.permission.READ_EXTERNAL_STORAGE)) {
 
-                Toast.makeText(Home.this,"Please accept for required permission",Toast.LENGTH_SHORT).show();
+                Toast.makeText(ShoeSwap.this,"Please accept for required permission",Toast.LENGTH_SHORT).show();
 
             }
 
             else
             {
-                ActivityCompat.requestPermissions(Home.this,
+                ActivityCompat.requestPermissions(ShoeSwap.this,
                         new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
                         PReqCode);
             }
@@ -185,7 +185,7 @@ public class Home extends AppCompatActivity
             // the user has successfully picked an image
             // we need to save its reference to a Uri variable
             pickedImgUri = data.getData() ;
-            popupPostImage.setImageURI(pickedImgUri);
+            popupShoeImage.setImageURI(pickedImgUri);
 
         }
 
@@ -199,23 +199,23 @@ public class Home extends AppCompatActivity
 
     private void iniPopup() {
 
-        popAddPost = new Dialog(this);
-        popAddPost.setContentView(R.layout.popup_add_post);
-        popAddPost.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-        popAddPost.getWindow().setLayout(Toolbar.LayoutParams.MATCH_PARENT,Toolbar.LayoutParams.WRAP_CONTENT);
-        popAddPost.getWindow().getAttributes().gravity = Gravity.TOP;
+        popAddShoe = new Dialog(this);
+        popAddShoe.setContentView(R.layout.popup_add_shoe);
+        popAddShoe.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        popAddShoe.getWindow().setLayout(Toolbar.LayoutParams.MATCH_PARENT,Toolbar.LayoutParams.WRAP_CONTENT);
+        popAddShoe.getWindow().getAttributes().gravity = Gravity.TOP;
 
         // ini popup widgets
-        popupUserImage = popAddPost.findViewById(R.id.popup_user_image);
-        popupPostImage = popAddPost.findViewById(R.id.popup_img);
-        popupTitle = popAddPost.findViewById(R.id.popup_title);
-        popupDescription = popAddPost.findViewById(R.id.popup_description);
-        popupAddBtn = popAddPost.findViewById(R.id.popup_add);
-        popupClickProgress = popAddPost.findViewById(R.id.popup_progressBar);
+        popupUserImage = popAddShoe.findViewById(R.id.popup_user_image);
+        popupShoeImage = popAddShoe.findViewById(R.id.popup_img);
+        popupTitle = popAddShoe.findViewById(R.id.popup_title);
+        popupDescription = popAddShoe.findViewById(R.id.popup_description);
+        popupAddBtn = popAddShoe.findViewById(R.id.popup_add);
+        popupClickProgress = popAddShoe.findViewById(R.id.popup_progressBar);
 
         // load Current user profile photo
 
-        Glide.with(Home.this).load(currentUser.getPhotoUrl()).into(popupUserImage);
+        Glide.with(ShoeSwap.this).load(currentUser.getPhotoUrl()).into(popupUserImage);
 
 
         // Add post click Listener
@@ -237,7 +237,7 @@ public class Home extends AppCompatActivity
                     // TODO Create Post Object and add it to firebase database
                     // first we need to upload post Image
                     // access firebase storage
-                    StorageReference storageReference = FirebaseStorage.getInstance().getReference().child("blog_images");
+                    StorageReference storageReference = FirebaseStorage.getInstance().getReference().child("shoe_images");
                     final StorageReference imageFilePath = storageReference.child(pickedImgUri.getLastPathSegment());
                     imageFilePath.putFile(pickedImgUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                         @Override
@@ -248,7 +248,7 @@ public class Home extends AppCompatActivity
                                 public void onSuccess(Uri uri) {
                                     String imageDownlaodLink = uri.toString();
                                     // create post Object
-                                    Post post = new Post(popupTitle.getText().toString(),
+                                    Shoe shoe = new Shoe(popupTitle.getText().toString(),
                                             popupDescription.getText().toString(),
                                             imageDownlaodLink,
                                             currentUser.getUid(),
@@ -256,7 +256,7 @@ public class Home extends AppCompatActivity
 
                                     // Add post to firebase database
 
-                                    addPost(post);
+                                    addShoe(shoe);
 
 
 
@@ -303,25 +303,25 @@ public class Home extends AppCompatActivity
 
     }
 
-    private void addPost(Post post) {
+    private void addShoe(Shoe shoe) {
 
         FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference myRef = database.getReference("Posts").push();
+        DatabaseReference myRef = database.getReference("Shoes").push();
 
         // get post unique ID and upadte post key
         String key = myRef.getKey();
-        post.setPostKey(key);
+        shoe.setShoeKey(key);
 
 
         // add post data to firebase database
 
-        myRef.setValue(post).addOnSuccessListener(new OnSuccessListener<Void>() {
+        myRef.setValue(shoe).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void aVoid) {
-                showMessage("Post Added successfully");
+                showMessage("Shoe Added successfully");
                 popupClickProgress.setVisibility(View.INVISIBLE);
                 popupAddBtn.setVisibility(View.VISIBLE);
-                popAddPost.dismiss();
+                popAddShoe.dismiss();
             }
         });
 
@@ -336,7 +336,7 @@ public class Home extends AppCompatActivity
 
     private void showMessage(String message) {
 
-        Toast.makeText(Home.this,message,Toast.LENGTH_LONG).show();
+        Toast.makeText(ShoeSwap.this,message,Toast.LENGTH_LONG).show();
 
     }
 
@@ -380,7 +380,7 @@ public class Home extends AppCompatActivity
 
         if (id == R.id.nav_home) {
 
-            getSupportActionBar().setTitle("Home");
+            getSupportActionBar().setTitle("Shoe");
             getSupportFragmentManager().beginTransaction().replace(R.id.container,new HomeFragment()).commit();
 
         } else if (id == R.id.nav_profile) {
