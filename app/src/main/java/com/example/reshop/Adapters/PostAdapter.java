@@ -1,4 +1,4 @@
-package com.example.myblog.Adapters;
+package com.example.reshop.Adapters;
 
 import android.content.Context;
 import android.content.Intent;
@@ -12,9 +12,9 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.example.myblog.Models.Post;
-import com.example.myblog.PostDetailActivity;
-import com.example.myblog.R;
+import com.example.reshop.Models.Post;
+import com.example.reshop.PostDetailActivity;
+import com.example.reshop.R;
 
 import java.util.List;
 

@@ -1,4 +1,4 @@
-package com.example.myblog;
+package com.example.reshop;
 
 import android.os.Bundle;
 

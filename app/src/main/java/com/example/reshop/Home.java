@@ -1,4 +1,4 @@
-package com.example.myblog;
+package com.example.reshop;
 
 import android.Manifest;
 import android.app.Dialog;
@@ -8,8 +8,6 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
-
-import com.example.myblog.Fragments.ShoeSwapFragment;
 
 import androidx.annotation.NonNull;
 
@@ -33,15 +31,10 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.bumptech.glide.Glide;
-import com.example.myblog.Fragments.HomeFragment;
-import com.example.myblog.Fragments.ProfileFragment;
-import com.example.myblog.Fragments.SettingsFragment;
-import com.example.myblog.Models.Post;
-import com.example.myblog.R;
-import com.google.android.gms.tasks.OnCompleteListener;
+import com.example.reshop.Fragments.HomeFragment;
+import com.example.reshop.Models.Post;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
@@ -51,7 +44,10 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
-import androidx.fragment.*;
+
+//home activity includes drawer along the side for navigation to 4 blog pages and the ar wardrobe
+//displaying username email,username + photo
+
 
 public class Home extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -75,17 +71,13 @@ public class Home extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        // ini
-
         mAuth = FirebaseAuth.getInstance();
         currentUser = mAuth.getCurrentUser();
 
-        // ini popup
         iniPopup();
         setupPopupImageClick();
 
-
-
+  //this will allow the user the ability to create a blog post
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -106,9 +98,6 @@ public class Home extends AppCompatActivity
 
         updateNavHeader();
 
-
-        // set the home fragment as the default one
-
         getSupportFragmentManager().beginTransaction().replace(R.id.container, new HomeFragment()).commit();
 
 
@@ -121,10 +110,6 @@ public class Home extends AppCompatActivity
         popupPostImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // here when image clicked we need to open the gallery
-                // before we open the gallery we need to check if our app have the access to user files
-                // we did this before in register activity I'm just going to copy the code to save time ...
-
                 checkAndRequestForPermission();
 
 
@@ -134,7 +119,7 @@ public class Home extends AppCompatActivity
 
 
     }
-
+//ensuring we have permission to open gallery and use photos
 
     private void checkAndRequestForPermission() {
 
@@ -156,7 +141,6 @@ public class Home extends AppCompatActivity
 
         }
         else
-            // everything goes well : we have permission to access user gallery
             openGallery();
 
     }
@@ -166,7 +150,6 @@ public class Home extends AppCompatActivity
 
 
     private void openGallery() {
-        //TODO: open gallery intent and wait for user to pick an image !
 
         Intent galleryIntent = new Intent(Intent.ACTION_GET_CONTENT);
         galleryIntent.setType("image/*");
@@ -175,15 +158,13 @@ public class Home extends AppCompatActivity
 
 
 
-    // when user picked an image ...
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
         if (resultCode == RESULT_OK && requestCode == REQUESCODE && data != null ) {
 
-            // the user has successfully picked an image
-            // we need to save its reference to a Uri variable
             pickedImgUri = data.getData() ;
             popupPostImage.setImageURI(pickedImgUri);
 
@@ -191,8 +172,6 @@ public class Home extends AppCompatActivity
 
 
     }
-
-
 
 
 
@@ -213,12 +192,9 @@ public class Home extends AppCompatActivity
         popupAddBtn = popAddPost.findViewById(R.id.popup_add);
         popupClickProgress = popAddPost.findViewById(R.id.popup_progressBar);
 
-        // load Current user profile photo
 
         Glide.with(Home.this).load(currentUser.getPhotoUrl()).into(popupUserImage);
 
-
-        // Add post click Listener
 
         popupAddBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -227,16 +203,13 @@ public class Home extends AppCompatActivity
                 popupAddBtn.setVisibility(View.INVISIBLE);
                 popupClickProgress.setVisibility(View.VISIBLE);
 
-                // we need to test all input fields (Title and description ) and post image
 
+                //ensuring no empty fields in posts!
                 if (!popupTitle.getText().toString().isEmpty()
                         && !popupDescription.getText().toString().isEmpty()
                         && pickedImgUri != null ) {
 
-                    //everything is okey no empty or null value
-                    // TODO Create Post Object and add it to firebase database
-                    // first we need to upload post Image
-                    // access firebase storage
+                    //storing post image to firebase
                     StorageReference storageReference = FirebaseStorage.getInstance().getReference().child("blog_images");
                     final StorageReference imageFilePath = storageReference.child(pickedImgUri.getLastPathSegment());
                     imageFilePath.putFile(pickedImgUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
@@ -246,15 +219,13 @@ public class Home extends AppCompatActivity
                             imageFilePath.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                                 @Override
                                 public void onSuccess(Uri uri) {
-                                    String imageDownlaodLink = uri.toString();
+                                    String imageDownloadLink = uri.toString();
                                     // create post Object
                                     Post post = new Post(popupTitle.getText().toString(),
                                             popupDescription.getText().toString(),
-                                            imageDownlaodLink,
+                                            imageDownloadLink,
                                             currentUser.getUid(),
                                             currentUser.getPhotoUrl().toString());
-
-                                    // Add post to firebase database
 
                                     addPost(post);
 
@@ -264,7 +235,6 @@ public class Home extends AppCompatActivity
                             }).addOnFailureListener(new OnFailureListener() {
                                 @Override
                                 public void onFailure(@NonNull Exception e) {
-                                    // something goes wrong uploading picture
 
                                     showMessage(e.getMessage());
                                     popupClickProgress.setVisibility(View.INVISIBLE);
@@ -303,22 +273,22 @@ public class Home extends AppCompatActivity
 
     }
 
+
     private void addPost(Post post) {
 
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference myRef = database.getReference("Posts").push();
 
-        // get post unique ID and upadte post key
+        // setting unique key for post
         String key = myRef.getKey();
         post.setPostKey(key);
 
 
-        // add post data to firebase database
-
+        //sending to firebase and returning response
         myRef.setValue(post).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void aVoid) {
-                showMessage("Post Added successfully");
+                showMessage("New Post Added successfully");
                 popupClickProgress.setVisibility(View.INVISIBLE);
                 popupAddBtn.setVisibility(View.VISIBLE);
                 popAddPost.dismiss();
@@ -352,19 +322,15 @@ public class Home extends AppCompatActivity
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.home, menu);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
+
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             return true;
         }
@@ -374,32 +340,38 @@ public class Home extends AppCompatActivity
 
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
+
+    //user navigating to new pages
     public boolean onNavigationItemSelected(MenuItem item) {
-        // Handle navigation view item clicks here.
         int id = item.getItemId();
 
         if (id == R.id.nav_home) {
 
-            getSupportActionBar().setTitle("Home");
+            getSupportActionBar().setTitle("ARBlog");
             getSupportFragmentManager().beginTransaction().replace(R.id.container,new HomeFragment()).commit();
 
-        } else if (id == R.id.nav_profile) {
-
-            getSupportActionBar().setTitle("Profile");
-            getSupportFragmentManager().beginTransaction().replace(R.id.container,new ProfileFragment()).commit();
-
-        } else if (id == R.id.nav_settings) {
-
-            getSupportActionBar().setTitle("Settings");
-            getSupportFragmentManager().beginTransaction().replace(R.id.container,new SettingsFragment()).commit();
 
         } else if (id == R.id.nav_shoe){
+            Intent i = new Intent(Home.this, ShoeHome.class);
+            startActivity(i);
 
-            getSupportActionBar().setTitle("ShoeSwap");
-            getSupportFragmentManager().beginTransaction().replace(R.id.container,new ShoeSwapFragment()).commit();
+
+        } else if (id == R.id.nav_men){
+            Intent i = new Intent(Home.this, MenHome.class);
+            startActivity(i);
+
+        } else if (id == R.id.nav_women){
+
+            Intent i = new Intent(Home.this, WomenHome.class);
+            startActivity(i);
+        }
+       else if (id == R.id.nav_ARWardrobe){
+                Intent i = new Intent(Home.this, MaskActivity.class);
+                startActivity(i);
 
 
         }
+
         else if (id == R.id.nav_signout) {
 
             FirebaseAuth.getInstance().signOut();
@@ -417,6 +389,7 @@ public class Home extends AppCompatActivity
         return true;
     }
 
+    //display username email and photo
     public void updateNavHeader() {
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
@@ -428,8 +401,6 @@ public class Home extends AppCompatActivity
         navUserMail.setText(currentUser.getEmail());
         navUsername.setText(currentUser.getDisplayName());
 
-        // now we will use Glide to load user image
-        // first we need to import the library
 
         Glide.with(this).load(currentUser.getPhotoUrl()).into(navUserPhot);
 

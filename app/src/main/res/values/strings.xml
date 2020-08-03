@@ -3,71 +3,15 @@
 
         <string name="tagline">Fashionable way to trade</string>
         <string name="subline">It\'s environmentally friendly!</string>
-        <string name="info">This application has been made in order to trade \n
-    Try out some of the sample clothes in augmented reality \n
-    use the sections to below to find out more information! </string>
-        <string name ="trades">Check out what people are currently trading</string>
-        <string name ="light">Changing your light bulbs to led can remove strain on your eyes from brightness and improve your sleep. </string>
-
-
-        <string name ="BtnLogin"> LOGIN </string>
-        <string name ="SignupEmail"> Email </string>
-        <string name ="BtnCreate"> Create Account </string>
-        <string name ="SignupPass"> Password </string>
-        <string name ="EnterPass"> Enter Password </string>
-        <string name ="BtnLogin2"> LOGIN</string>
-        <string name ="BtnSignup"> Signup Now </string>
-        <string name ="BtnForgot"> Forgot Password </string>
-        <string name ="BtnPlants"> PROFILE </string>
-        <string name ="BtnLights"> TRADES </string>
-        <string name ="BtnSounds"> CLOTHES </string>
-        <string name ="BtnOcean"> UPLOAD </string>
-        <string name ="BtnCamera">Open Camera</string>
-        <string name ="BtnFileUp">Upload File</string>
-        <string name ="BtnFile">Choose File</string>
-        <string name ="HintFile">Enter File Name</string>
-        <string name ="HintEmail">Enter Your Email</string>
-        <string name ="BtnRegister">Register</string>
-        <string name ="BtnHome">Home</string>
-
-        <string name = "BtnMen">Men</string>
-        <string name = "BtnWomen">Women</string>
-
-
-
-        <string name ="BtnView">VIEW NEW SWAP OFFERS</string>
-        <string name ="BtnAR">VIRTUAL WARDROBE</string>
-        <string name ="BtnClothes">MY SWAPS</string>
-
-
-        <string name ="Et_Email">"Email is required"</string>
-        <string name ="Et_Invalid">"Please enter a valid email"</string>
-        <string name ="Et_PW">"Password is required"</string>
-        <string name ="Et_PW6">"Password needs to be 6 characters"</string>
-
-
-        <string name ="ToastUpload_In_Progress">Upload is already in progress</string>
-        <string name ="ToastUpload_Success">Upload Successful</string>
-        <string name ="ToastUpload_Fail">"No file selected"</string>
-        <string name ="ToastUser_Success">"User Registered Successful"</string>
-        <string name ="ToastUser_Email_Invalid">"This email already exists"</string>
-
-        <string name ="TVView">"Click to load images"</string>
-        <string name ="WomenInfo1">"Boohoo Dress Size 8 "</string>
-        <string name ="WomenInfo2">"Zara Dress Size 10"</string>
-        <string name ="MenInfo1">"Ralph Lauren Shirt Size L"</string>
-        <string name ="MenInfo2">"Tommy Hilfiger T-shirt Size M"</string>
-
 
     <string name="title_activity_home">Home</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
-    <string name="nav_header_title">Android Studio</string>
-    <string name="nav_header_subtitle">android.studio@android.com</string>
+    <string name="nav_header_title">Mail User</string>
+    <string name="nav_header_subtitle">mail@mail.com</string>
     <string name="nav_header_desc">Navigation header</string>
     <string name="action_settings">Settings</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>

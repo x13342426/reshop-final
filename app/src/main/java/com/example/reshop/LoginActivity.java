@@ -1,4 +1,4 @@
-package com.example.myblog;
+package com.example.reshop;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -11,9 +11,6 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -21,9 +18,11 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
 
+//this class provides the user the ability to login to their account by entering email and password which they signed up with
+
 public class LoginActivity extends AppCompatActivity {
 
-
+//declaring variables
     private EditText userMail,userPassword;
     private Button btnLogin;
     private ProgressBar loginProgress;
@@ -43,9 +42,11 @@ public class LoginActivity extends AppCompatActivity {
         btnLogin = findViewById(R.id.loginBtn);
         loginProgress = findViewById(R.id.login_progress);
         mAuth = FirebaseAuth.getInstance();
-        HomeActivity = new Intent(this,com.example.myblog.Home.class);
+        HomeActivity = new Intent(this,com.example.reshop.Home.class);
         loginPhoto = findViewById(R.id.login_photo);
         loginPhoto.setOnClickListener(new View.OnClickListener() {
+
+            //redirecting user to register page if they click
             @Override
             public void onClick(View view) {
 
@@ -66,9 +67,9 @@ public class LoginActivity extends AppCompatActivity {
 
                 final String mail = userMail.getText().toString();
                 final String password = userPassword.getText().toString();
-
+                //checking to see all fields have entries
                 if (mail.isEmpty() || password.isEmpty()) {
-                    showMessage("Please Verify All Field");
+                    showMessage("Please fill in all entries");
                     btnLogin.setVisibility(View.VISIBLE);
                     loginProgress.setVisibility(View.INVISIBLE);
                 }
@@ -127,14 +128,12 @@ public class LoginActivity extends AppCompatActivity {
         Toast.makeText(getApplicationContext(),text, Toast.LENGTH_LONG).show();
     }
 
-
+//when application loads seeing if user is logged in and updating the ui
     @Override
     protected void onStart() {
         super.onStart();
         FirebaseUser user = mAuth.getCurrentUser();
-
         if(user != null) {
-            //user is already connected  so we need to redirect him to home page
             updateUI();
 
         }

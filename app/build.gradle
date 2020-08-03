@@ -16,11 +16,15 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+    compileOptions {
+        sourceCompatibility = 1.8
+        targetCompatibility = 1.8
+    }
 }
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation 'com.android.support:appcompat-v7:27.1.1'
+    implementation 'com.android.support:appcompat-v7:28.1.1'
     implementation 'com.android.support.constraint:constraint-layout:1.1.3'
 
     // firebase core
@@ -33,14 +37,16 @@ dependencies {
     implementation 'com.google.firebase:firebase-database:16.0.1'
     // Glide library
     implementation 'com.github.bumptech.glide:glide:4.8.0'
-    implementation 'com.android.support:support-v4:27.1.1'
+    implementation 'com.android.support:support-v4:28.1.1'
     implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
     annotationProcessor 'com.github.bumptech.glide:compiler:4.8.0'
+    implementation 'com.google.ar.sceneform.ux:sceneform-ux:1.8.0'
 
-
-
-
-    implementation 'com.android.support:design:27.1.1'
+    androidTestImplementation 'com.android.support.test:rules:1.0.2'
+    androidTestImplementation 'com.android.support.test:runner:1.0.2'
+    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
+    testImplementation 'org.mockito:mockito-all:1.10.19'
+    implementation 'com.android.support:design:28.1.1'
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
@@ -49,3 +55,15 @@ dependencies {
 
 apply plugin: 'com.google.gms.google-services'
 apply plugin: 'maven'
+apply plugin: 'com.google.ar.sceneform.plugin'
+
+sceneform.asset('sampledata/cap.fbx',
+        'default',
+        'sampledata/cap.sfa',
+        'src/main/assets/cap')
+
+sceneform.asset('sampledata/glass1.fbx',
+        'default',
+        'sampledata/glass1.sfa',
+        'src/main/assets/glass1')
+

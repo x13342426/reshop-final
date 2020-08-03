@@ -1,4 +1,4 @@
-package com.example.myblog.Models;
+package com.example.reshop.Models;
 
 import com.google.firebase.database.ServerValue;
 

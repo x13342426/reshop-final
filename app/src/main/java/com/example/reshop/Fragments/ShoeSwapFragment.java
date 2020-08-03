@@ -1,4 +1,4 @@
-package com.example.myblog.Fragments;
+package com.example.reshop.Fragments;
 
 import android.app.Fragment;
 import android.content.Context;
@@ -12,11 +12,9 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.myblog.Adapters.PostAdapter;
-import com.example.myblog.Models.Post;
-import com.example.myblog.R;
-import com.example.myblog.Adapters.PostAdapter;
-import com.example.myblog.Models.Post;
+import com.example.reshop.Adapters.ShoeAdapter;
+import com.example.reshop.R;
+import com.example.reshop.Models.Shoe;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -34,29 +32,27 @@ import java.util.List;
  * Use the {@link HomeFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class HomeFragment extends androidx.fragment.app.Fragment {
-    // TODO: Rename parameter arguments, choose names that match
+public class ShoeSwapFragment extends androidx.fragment.app.Fragment {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
-    // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
 
     private OnFragmentInteractionListener mListener;
 
 
-    RecyclerView postRecyclerView ;
-    PostAdapter postAdapter ;
+    RecyclerView shoeRecyclerView ;
+    ShoeAdapter shoeAdapter ;
     FirebaseDatabase firebaseDatabase;
     DatabaseReference databaseReference ;
-    List <Post>postList;
+    List <Shoe>shoeList;
 
 
 
 
-    public HomeFragment() {
+    public ShoeSwapFragment() {
         // Required empty public constructor
     }
 
@@ -68,9 +64,9 @@ public class HomeFragment extends androidx.fragment.app.Fragment {
      * @param param2 Parameter 2.
      * @return A new instance of fragment HomeFragment.
      */
-    // TODO: Rename and change types and number of parameters
-    public static HomeFragment newInstance(String param1, String param2) {
-        HomeFragment fragment = new HomeFragment();
+
+    public static ShoeSwapFragment newInstance(String param1, String param2) {
+        ShoeSwapFragment fragment = new ShoeSwapFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -91,12 +87,12 @@ public class HomeFragment extends androidx.fragment.app.Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View fragmentView = inflater.inflate(R.layout.fragment_home, container, false);
-        postRecyclerView  = fragmentView.findViewById(R.id.postRV);
-        postRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        postRecyclerView.setHasFixedSize(true);
+        View fragmentView = inflater.inflate(R.layout.fragment_shoeswap, container, false);
+        shoeRecyclerView  = fragmentView.findViewById(R.id.shoeRV);
+        shoeRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        shoeRecyclerView.setHasFixedSize(true);
         firebaseDatabase = FirebaseDatabase.getInstance();
-        databaseReference = firebaseDatabase.getReference("Posts");
+        databaseReference = firebaseDatabase.getReference("Shoe");
         return fragmentView ;
     }
 
@@ -111,18 +107,18 @@ public class HomeFragment extends androidx.fragment.app.Fragment {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
-                postList = new ArrayList<>();
-                for (DataSnapshot postsnap: dataSnapshot.getChildren()) {
+                shoeList = new ArrayList<>();
+                for (DataSnapshot shoesnap: dataSnapshot.getChildren()) {
 
-                    Post post = postsnap.getValue(Post.class);
-                    postList.add(post) ;
+                    Shoe shoe = shoesnap.getValue(Shoe.class);
+                    shoeList.add(shoe) ;
 
 
 
                 }
 
-                postAdapter = new PostAdapter(getActivity(),postList);
-                postRecyclerView.setAdapter(postAdapter);
+                shoeAdapter = new ShoeAdapter(getActivity(), shoeList);
+                shoeRecyclerView.setAdapter(shoeAdapter);
 
 
             }
@@ -137,7 +133,7 @@ public class HomeFragment extends androidx.fragment.app.Fragment {
 
     }
 
-    // TODO: Rename method, update argument and hook method into UI event
+
     public void onButtonPressed(Uri uri) {
         if (mListener != null) {
             mListener.onFragmentInteraction(uri);
@@ -166,7 +162,6 @@ public class HomeFragment extends androidx.fragment.app.Fragment {
      * >Communicating with Other Fragments</a> for more information.
      */
     public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
     }
 }

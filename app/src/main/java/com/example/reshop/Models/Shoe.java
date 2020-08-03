@@ -1,4 +1,4 @@
-package com.example.myblog.Models;
+package com.example.reshop.Models;
 
 import com.google.firebase.database.ServerValue;
 
@@ -32,7 +32,7 @@ public class Shoe {
         return shoeKey;
     }
 
-    public void setShoeKey(String ShoeKey) {
+    public void setShoeKey(String shoeKey) {
         this.shoeKey = shoeKey;
     }
 

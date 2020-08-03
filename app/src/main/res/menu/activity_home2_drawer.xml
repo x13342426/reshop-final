@@ -7,24 +7,32 @@
         <item
             android:id="@+id/nav_home"
             android:icon="@drawable/ic_home_black_24dp"
-            android:title="Home" />
-        <item
-            android:id="@+id/nav_profile"
-            android:icon="@drawable/ic_person_black_24dp"
-            android:title="Profile" />
-        <item
-            android:id="@+id/nav_settings"
-            android:icon="@drawable/ic_settings_black_24dp"
-            android:title="Settings" />
-        <item
-            android:id="@+id/nav_signout"
-            android:icon="@drawable/ic_exit_to_app_black_24dp"
-            android:title="Sign Out"/>
+            android:title="ArBlog" />
+
          <item
              android:id="@+id/nav_shoe"
-             android:icon="@drawable/ic_exit_to_app_black_24dp"
+             android:icon="@drawable/ic_shoes"
              android:title="ShoeSwap"
             />
+        <item
+            android:id="@+id/nav_men"
+            android:icon="@drawable/ic_017_t_shirt"
+            android:title="Mens"
+            />
+        <item
+            android:id="@+id/nav_women"
+            android:icon="@drawable/ic_004_dress"
+            android:title="Womens"
+            />
+        <item
+            android:id="@+id/nav_ARWardrobe"
+            android:icon="@drawable/ic_menu_camera"
+            android:title="ARWardrobe"
+            />
+        <item
+            android:id="@+id/nav_signout"
+            android:icon="@drawable/ic_049_backpack"
+            android:title="Sign Out"/>
     </group>
 
 

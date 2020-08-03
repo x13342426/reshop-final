@@ -1,4 +1,4 @@
-package com.example.myblog;
+package com.example.reshop;
 
 import android.Manifest;
 import android.content.Intent;
@@ -16,8 +16,6 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
@@ -32,6 +30,8 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
+//this class allows the user to register an account with username, email and password and also attach a picture to their account
+//all information stored in firebase storage
 public class RegisterActivity extends AppCompatActivity {
 
 
@@ -80,8 +80,7 @@ public class RegisterActivity extends AppCompatActivity {
                 if( email.isEmpty() || name.isEmpty() || password.isEmpty()  || !password.equals(password2)) {
 
 
-                    // something goes wrong : all fields must be filled
-                    // we need to display an error message
+                    // making sure no fields missing
                     showMessage("Please Verify all fields") ;
                     regBtn.setVisibility(View.VISIBLE);
                     loadingProgress.setVisibility(View.INVISIBLE);
@@ -89,23 +88,13 @@ public class RegisterActivity extends AppCompatActivity {
 
                 }
                 else {
-                    // everything is ok and all fields are filled now we can start creating user account
-                    // CreateUserAccount method will try to create the user if the email is valid
-
+                    //creating user account if all fields entered
                     CreateUserAccount(email,name,password);
                 }
 
-
-
-
-
-
-
-
-
             }
         });
-
+        // setting up the ability for users to choose a profile picture from their gallery
         ImgUserPhoto = findViewById(R.id.regUserPhoto) ;
 
         ImgUserPhoto.setOnClickListener(new View.OnClickListener() {
@@ -136,7 +125,7 @@ public class RegisterActivity extends AppCompatActivity {
     private void CreateUserAccount(String email, final String name, String password) {
 
 
-        // this method create user account with specific email and password
+        // registering user and storing their information
 
         mAuth.createUserWithEmailAndPassword(email,password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
@@ -144,9 +133,8 @@ public class RegisterActivity extends AppCompatActivity {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
 
-                            // user account created successfully
-                            showMessage("Account created");
-                            // after we created user account we need to update his profile picture and name
+                            showMessage("Account Created Successfully!");
+                            // updating application with user information
                             updateUserInfo( name ,pickedImgUri,mAuth.getCurrentUser());
 
 
@@ -155,7 +143,7 @@ public class RegisterActivity extends AppCompatActivity {
                         else
                         {
 
-                            // account creation failed
+                            // account creation failed / clause for invalid entries
                             showMessage("account creation failed" + task.getException().getMessage());
                             regBtn.setVisibility(View.VISIBLE);
                             loadingProgress.setVisibility(View.INVISIBLE);
@@ -177,7 +165,7 @@ public class RegisterActivity extends AppCompatActivity {
     // update user photo and name
     private void updateUserInfo(final String name, Uri pickedImgUri, final FirebaseUser currentUser) {
 
-        // first we need to upload user photo to firebase storage and get url
+        // saving picture to firebase folder
 
         StorageReference mStorage = FirebaseStorage.getInstance().getReference().child("users_photos");
         final StorageReference imageFilePath = mStorage.child(pickedImgUri.getLastPathSegment());
@@ -185,15 +173,14 @@ public class RegisterActivity extends AppCompatActivity {
             @Override
             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
 
-                // image uploaded succesfully
-                // now we can get our image url
+                //getting image url for reference
 
                 imageFilePath.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                     @Override
                     public void onSuccess(Uri uri) {
 
-                        // uri contain user image url
 
+                //updating application
 
                         UserProfileChangeRequest profleUpdate = new UserProfileChangeRequest.Builder()
                                 .setDisplayName(name)
@@ -241,15 +228,13 @@ public class RegisterActivity extends AppCompatActivity {
 
     }
 
-    // simple method to show toast message
     private void showMessage(String message) {
 
         Toast.makeText(getApplicationContext(),message, Toast.LENGTH_LONG).show();
 
     }
-
+        //allow users to select image from their gallery and retrieve permission
     private void openGallery() {
-        //TODO: open gallery intent and wait for user to pick an image !
 
         Intent galleryIntent = new Intent(Intent.ACTION_GET_CONTENT);
         galleryIntent.setType("image/*");
@@ -287,8 +272,7 @@ public class RegisterActivity extends AppCompatActivity {
 
         if (resultCode == RESULT_OK && requestCode == REQUESCODE && data != null ) {
 
-            // the user has successfully picked an image
-            // we need to save its reference to a Uri variable
+            //saving uri image after picture selected
             pickedImgUri = data.getData() ;
             ImgUserPhoto.setImageURI(pickedImgUri);
 

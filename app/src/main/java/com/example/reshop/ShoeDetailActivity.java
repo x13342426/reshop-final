@@ -1,4 +1,4 @@
-package com.example.myblog;
+package com.example.reshop;
 
 
 import android.os.Bundle;
@@ -18,8 +18,8 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.example.myblog.Adapters.CommentAdapter;
-import com.example.myblog.Models.Comment;
+import com.example.reshop.Adapters.CommentAdapter;
+import com.example.reshop.Models.Comment;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
@@ -60,12 +60,11 @@ ShoeDetailActivity extends AppCompatActivity {
         setContentView(R.layout.activity_shoe_detail);
 
 
-        // let's set the statue bar to transparent
         Window w = getWindow();
         w.setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
         getSupportActionBar().hide();
 
-        // ini Views
+
         RvComment = findViewById(R.id.rv_comment);
         imgshoe =findViewById(R.id.shoe_detail_img);
         imgUsershoe = findViewById(R.id.shoe_detail_user_img);
@@ -83,8 +82,6 @@ ShoeDetailActivity extends AppCompatActivity {
         firebaseUser = firebaseAuth.getCurrentUser();
         firebaseDatabase = FirebaseDatabase.getInstance();
 
-
-        // add Comment button click listner
 
         btnAddComment.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -118,11 +115,6 @@ ShoeDetailActivity extends AppCompatActivity {
         });
 
 
-        // now we need to bind all data into those views
-        // firt we need to get shoe data
-        // we need to send shoe detail data to this activity first ...
-        // now we can get shoe data
-
         String shoeImage = getIntent().getExtras().getString("shoeImage") ;
         Glide.with(this).load(shoeImage).into(imgshoe);
 
@@ -135,19 +127,14 @@ ShoeDetailActivity extends AppCompatActivity {
         String shoeDescription = getIntent().getExtras().getString("description");
         txtshoeDesc.setText(shoeDescription);
 
-        // setcomment user image
 
         Glide.with(this).load(firebaseUser.getPhotoUrl()).into(imgCurrentUser);
-        // get shoe id
         shoeKey = getIntent().getExtras().getString("shoeKey");
 
         String date = timestampToString(getIntent().getExtras().getLong("shoeDate"));
         txtshoeDateName.setText(date);
 
-
-        // ini Recyclerview Comment
         iniRvComment();
-
 
     }
 
@@ -170,7 +157,6 @@ ShoeDetailActivity extends AppCompatActivity {
                 commentAdapter = new CommentAdapter(getApplicationContext(),listComment);
                 RvComment.setAdapter(commentAdapter);
 
-
             }
 
             @Override
@@ -178,8 +164,6 @@ ShoeDetailActivity extends AppCompatActivity {
 
             }
         });
-
-
 
 
     }
@@ -190,7 +174,6 @@ ShoeDetailActivity extends AppCompatActivity {
 
     }
 
-
     private String timestampToString(long time) {
 
         Calendar calendar = Calendar.getInstance(Locale.ENGLISH);
@@ -200,6 +183,5 @@ ShoeDetailActivity extends AppCompatActivity {
 
 
     }
-
 
 }

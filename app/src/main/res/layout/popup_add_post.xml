@@ -71,7 +71,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/popup_img"
-        app:srcCompat="@drawable/ic_create_black_24dp" />
+        app:srcCompat="@drawable/ic_046_sunglasses" />
 
     <ProgressBar
         android:padding="4dp"

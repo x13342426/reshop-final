@@ -1,4 +1,4 @@
-package com.example.myblog.Adapters;
+package com.example.reshop.Adapters;
 
 import android.content.Context;
 import android.text.format.DateFormat;
@@ -12,8 +12,8 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.example.myblog.Models.Comment;
-import com.example.myblog.R;
+import com.example.reshop.Models.Comment;
+import com.example.reshop.R;
 
 import java.util.Calendar;
 import java.util.List;

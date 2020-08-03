@@ -1,4 +1,4 @@
-package com.example.myblog;
+package com.example.reshop;
 
 
 import android.os.Bundle;
@@ -18,8 +18,8 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.example.myblog.Adapters.CommentAdapter;
-import com.example.myblog.Models.Comment;
+import com.example.reshop.Adapters.CommentAdapter;
+import com.example.reshop.Models.Comment;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
@@ -60,12 +60,10 @@ PostDetailActivity extends AppCompatActivity {
         setContentView(R.layout.activity_post_detail);
 
 
-        // let's set the statue bar to transparent
         Window w = getWindow();
         w.setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
         getSupportActionBar().hide();
 
-        // ini Views
         RvComment = findViewById(R.id.rv_comment);
         imgPost =findViewById(R.id.post_detail_img);
         imgUserPost = findViewById(R.id.post_detail_user_img);
@@ -83,8 +81,6 @@ PostDetailActivity extends AppCompatActivity {
         firebaseUser = firebaseAuth.getCurrentUser();
         firebaseDatabase = FirebaseDatabase.getInstance();
 
-
-        // add Comment button click listner
 
         btnAddComment.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -118,11 +114,6 @@ PostDetailActivity extends AppCompatActivity {
         });
 
 
-        // now we need to bind all data into those views
-        // firt we need to get post data
-        // we need to send post detail data to this activity first ...
-        // now we can get post data
-
         String postImage = getIntent().getExtras().getString("postImage") ;
         Glide.with(this).load(postImage).into(imgPost);
 
@@ -135,17 +126,14 @@ PostDetailActivity extends AppCompatActivity {
         String postDescription = getIntent().getExtras().getString("description");
         txtPostDesc.setText(postDescription);
 
-        // setcomment user image
 
         Glide.with(this).load(firebaseUser.getPhotoUrl()).into(imgCurrentUser);
-        // get post id
         PostKey = getIntent().getExtras().getString("postKey");
 
         String date = timestampToString(getIntent().getExtras().getLong("postDate"));
         txtPostDateName.setText(date);
 
 
-        // ini Recyclerview Comment
         iniRvComment();
 
 
@@ -180,8 +168,6 @@ PostDetailActivity extends AppCompatActivity {
         });
 
 
-
-
     }
 
     private void showMessage(String message) {
@@ -198,8 +184,6 @@ PostDetailActivity extends AppCompatActivity {
         String date = DateFormat.format("dd-MM-yyyy",calendar).toString();
         return date;
 
-
     }
-
 
 }

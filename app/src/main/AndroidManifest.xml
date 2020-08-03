@@ -1,9 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.myblog">
+    package="com.example.reshop">
 
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-feature android:name="android.hardware.camera.ar" android:required="true"/>
+
 
     <application
         android:allowBackup="true"
@@ -12,23 +15,46 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".RegisterActivity"/>
-        <activity android:name=".HomeActivity"/>
-        <activity android:name=".Profile"/>
-        <activity android:name=".LoginActivity">
+        <activity android:name="com.example.reshop.RegisterActivity"/>
+        <activity android:name="com.example.reshop.HomeActivity"/>
+        <activity android:name="com.example.reshop.LoginActivity"
+            android:label="Login">
 
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+        <intent-filter>
+            <action android:name="android.intent.action.MAIN" />
+
+            <category android:name="android.intent.category.LAUNCHER" />
+        </intent-filter>
+    </activity>
         <activity
-        android:name=".Home"
+        android:name="com.example.reshop.Home"
         android:label="@string/title_activity_home"
         android:theme="@style/AppTheme.NoActionBar" />
 
-        <activity android:name=".PostDetailActivity"></activity>
+        <activity android:name="com.example.reshop.PostDetailActivity"></activity>
+
+        <activity android:name="com.example.reshop.ShoeDetailActivity"></activity>
+        <activity android:name="com.example.reshop.MenDetailActivity"></activity>
+        <activity android:name="com.example.reshop.WomenDetailActivity"></activity>
+        <activity android:name="com.example.reshop.MaskActivity"
+            android:label="Ar Wardrobe" />
+        <activity android:name="com.example.reshop.TestActivity"/>
+
+        <activity android:name="com.example.reshop.CapActivity"
+        android:label="Ar Wardrobe" />
+        <activity android:name="com.example.reshop.MenHome"
+            android:label="Mens Home"
+            android:theme="@style/AppTheme.NoActionBar"/>
+        <activity android:name="com.example.reshop.WomenHome"
+            android:label="Womens Home"
+            android:theme="@style/AppTheme.NoActionBar"/>
+        <activity android:name="com.example.reshop.ShoeHome"
+            android:label="Shoes Home"
+            android:theme="@style/AppTheme.NoActionBar"/>
+
+        <meta-data android:name="com.google.ar.core" android:value="required" />
+
     </application>
 
 </manifest>
